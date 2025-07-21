@@ -1,16 +1,11 @@
 import { CardGame } from "@/components/home/card-game";
+import Header_Golpeao from "@/components/home/header";
 
 export default function HomeGames() {
   return (
     <div className=" m-5">
-      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-        <div>
-          <h1 className="text-4xl font-bold tracking-tight">Home Games</h1>
-          <p className="text-muted-foreground mt-1">Juega uno de nuestros juegos</p>
-        </div>      
-      </header>
+      <Header_Golpeao titulo="Home Games" descrip="Juega uno de nuestros juegos" botones={[]}/>
       
-
       <div className="flex flex-wrap gap-4" >
         <CardGame 
           titulo="Golpeado" 
