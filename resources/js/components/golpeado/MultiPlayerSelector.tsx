@@ -1,5 +1,7 @@
 import { Player } from "@/lib/utils-golpea";
 import React, { useCallback, useMemo, useState } from "react";
+import { Button } from "../ui/button";
+import { Users } from "lucide-react";
 
 interface MultiPlayerSelectorProps {
     players: Player[];
@@ -82,12 +84,15 @@ const MultiPlayerSelector: React.FC<MultiPlayerSelectorProps> = ({
                             onChange={handleInputChange}
                             placeholder={canAddMore ? placeholder : `Máximo ${maxSelections} jugadores`}
                             disabled={disabled || !canAddMore}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                            className="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                         />
+                        <Button variant="outline" size="lg">
+                            <Users />
+                        </Button>
                         
                         {/* DROPDOWN OPTIMIZADO */}
                         {showDropdown && filteredPlayers.length > 0 && !disabled && canAddMore && (
-                            <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                            <div className="absolute z-10 w-1/2 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
                                 {filteredPlayers.map((player) => (
                                     <div
                                         key={player.id}

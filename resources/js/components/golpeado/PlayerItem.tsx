@@ -1,30 +1,93 @@
 import { Player } from "@/lib/utils-golpea";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
+import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { Button } from "../ui/button";
+import { Badge, Check, Crown, UserCheck, UserX } from "lucide-react";
 
 
 const PlayerItem = React.memo<{
-    player: Player;
-    onRemove: (playerId:number) => void;}>
-(({player, onRemove})=>{
-    console.log(`🔄 PlayerItem ${player.name} re-renderizado`); // Para debug
-    const handleRemove = useCallback(() => {
-        onRemove(player.id);
-    }, [onRemove, player.id]);
+  player: Player;
+  onRemove: (playerId:number) => void;
+  onSelect: (playerId:number, isSelected: boolean) => void;
+  isSelected?:boolean;
+}>(
+  ({player, onRemove, onSelect, isSelected = false})=>{
+  console.log(`🔄 PlayerItem ${player.name} re-renderizado`); // Para debug
+  
+  const [localIsSelected, setLocalIsSelected] = useState(isSelected);
 
-    return (
-        <div className="flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-lg">
-            <div>
-                <div className="font-medium text-blue-900">{player.name}</div>
-                <div className="text-sm text-blue-600">{player.email}</div>
+  const handleRemove = useCallback(() => {
+    onRemove(player.id);
+  }, [onRemove, player.id]);
+
+  const selectPlayer = useCallback(() => {
+    const newEstadoSelect = !localIsSelected;
+    setLocalIsSelected(newEstadoSelect);
+    onSelect(player.id, newEstadoSelect);
+  }, [localIsSelected, onSelect, player.id]);
+
+  const getIniciales = (name:string)=>{
+    return name.split(' ').map(palabra => palabra.charAt(0)).join('').toUpperCase().slice(0,2);
+  };
+
+  return (
+    <Card className={`w-full max-w-sm transition-all duration-200 rounded-none ${
+      localIsSelected 
+          ? 'border-blue-500 border-2 bg-blue-50 shadow-md' 
+          : 'border-gray-200 hover:border-gray-300'
+      }`}>
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className={`h-10 w-10 flex items-center justify-center text-white font-medium text-sm rounded-none ${
+              localIsSelected ? 'bg-blue-600' : 'bg-gray-500'
+              }`}>
+              {getIniciales(player.name)}
             </div>
-            <button
-                onClick={handleRemove}
-                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
-            >
-                Remover
-            </button>
+            <div>
+              <CardTitle className="font-medium text-blue-900">
+                {player.name}
+              </CardTitle>
+              <CardDescription className="text-sm text-blue-600">
+                {player.email}
+              </CardDescription>
+            </div>
+          </div>
+          {/* Badge de estado */}
+          {localIsSelected && (
+            <CardAction className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 ml-2 bg-yellow-200 text-yellow-800 border-yellow-300">
+              <Crown />Ganador
+            </CardAction>
+          )}
         </div>
-    );
+      </CardHeader>
+      <CardContent className="flex gap-2 pt-0">
+        <Button 
+          onClick={handleRemove} 
+          variant="destructive"
+          className="flex-1 rounded-none"
+          size="sm"
+        >
+          <UserX className="h-4 w-4 mr-1" />
+          Remover
+        </Button>
+        
+        <Button 
+          onClick={selectPlayer} 
+          variant={localIsSelected ? "secondary" : "default"}
+          className={`flex-1 rounded-none ${
+            localIsSelected 
+              ? 'bg-blue-100 text-blue-700 hover:bg-blue-200' 
+              : 'bg-blue-600 hover:bg-blue-700'
+          }`}
+          size="sm"
+        >
+          <UserCheck className="h-4 w-4 mr-1" />
+          {localIsSelected ? 'Deseleccionar' : 'Seleccionar'}
+        </Button>
+      </CardContent>
+    </Card>
+  );
 });
 
 export default PlayerItem;
