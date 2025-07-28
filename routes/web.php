@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\GameController;
-use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\GolpeadoController;
 use App\Http\Controllers\RondaController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,7 +14,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
-    Route::get('players', [PlayerController::class,'index'])->name('players.index');
+    Route::get('players', [GolpeadoController::class,'index'])->name('players.index');
     Route::post('game', [GameController::class,'store'])->name('game.store');
     Route::put('game/cierre', [GameController::class,'update'])->name('game.cierre');
     Route::post('ronda', [RondaController::class,'store'])->name('ronda.store');
@@ -24,9 +24,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('home-games', function () {
         return Inertia::render('HomeGames');
     })->name('home-games');
-    Route::get('golpeado',function () {
-        return Inertia::render('Golpeado');
-    })->name('golpeado');
+    Route::get('golpeado',[GolpeadoController::class,'index'])->name('golpeado');
 });
 
 require __DIR__.'/settings.php';
