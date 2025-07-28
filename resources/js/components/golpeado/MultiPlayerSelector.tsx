@@ -11,56 +11,6 @@ interface MultiPlayerSelectorProps {
     maxSelections?: number;
 }
 
-const SelectedPlayersList = React.memo<{
-    players: Player[];
-    onRemove: (playerId:number) => void;
-}>(({players,onRemove})=>{
-    console.log("Rendering SelectedPlayersList");
-
-    return(
-        <div className="mt-4">
-            <h4 className="font-semibold mb-2">Jugadores Seleccionados ({players.length})</h4>
-            {players.length === 0 ? (
-                <p className="text-gray-500 italic">No hay jugadores seleccionados</p>
-            ): (<div className="space-y-2">
-                    {players.map((player) => (
-                        <PlayerItem 
-                            key={player.id} 
-                            player={player} 
-                            onRemove={onRemove} 
-                        />
-                    ))}
-                </div>
-            )}
-        </div>
-    );
-});
-
-const PlayerItem = React.memo<{
-    player: Player;
-    onRemove: (playerId:number) => void;}>
-(({player, onRemove})=>{
-    console.log(`🔄 PlayerItem ${player.name} re-renderizado`); // Para debug
-    const handleRemove = useCallback(() => {
-        onRemove(player.id);
-    }, [onRemove, player.id]);
-
-    return (
-        <div className="flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-lg">
-            <div>
-                <div className="font-medium text-blue-900">{player.name}</div>
-                <div className="text-sm text-blue-600">{player.email}</div>
-            </div>
-            <button
-                onClick={handleRemove}
-                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
-            >
-                Remover
-            </button>
-        </div>
-    );
-});
-
 const MultiPlayerSelector: React.FC<MultiPlayerSelectorProps> = ({
     players, 
     selectedPlayers,
@@ -109,11 +59,6 @@ const MultiPlayerSelector: React.FC<MultiPlayerSelectorProps> = ({
         setShowDropdown(false);
     }, [selectedPlayers, onPlayersChange, maxSelections]);
 
-    const handleRemovePlayer = useCallback((playerId: number): void => {
-        const newPlayers = selectedPlayers.filter(p => p.id !== playerId);
-        onPlayersChange(newPlayers);
-    }, [selectedPlayers, onPlayersChange]);
-
     const clearAllPlayers = useCallback((): void => {
         onPlayersChange([]);
     }, [onPlayersChange]);
@@ -125,6 +70,8 @@ const MultiPlayerSelector: React.FC<MultiPlayerSelectorProps> = ({
 
     return (
         <div className={`${className}`}>
+
+            
             {/* INPUT DE BÚSQUEDA */}
             <div className="relative">
                 <div className="flex gap-2">
@@ -180,12 +127,6 @@ const MultiPlayerSelector: React.FC<MultiPlayerSelectorProps> = ({
                     </div>
                 )}
             </div>
-
-            {/* 🚀 LISTA OPTIMIZADA - Solo se re-renderiza cuando cambian los selectedPlayers */}
-            <SelectedPlayersList 
-                players={selectedPlayers} 
-                onRemove={handleRemovePlayer} 
-            />
         </div>
     );
 };

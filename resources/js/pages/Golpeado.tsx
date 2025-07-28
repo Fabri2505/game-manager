@@ -2,8 +2,9 @@ import Header_Golpeao from "@/components/home/header";
 import { Button } from "@/components/ui/button";
 import { Player } from "@/lib/utils-golpea";
 import { Music } from "lucide-react";
-import  MultiPlayerSelector  from "@/components/golpeado/player-selector";
+import  MultiPlayerSelector  from "@/components/golpeado/MultiPlayerSelector";
 import { useCallback, useState } from "react";
+import SelectedPlayersList from "@/components/golpeado/SelectedPlayersList";
 
 export default function Golpeado({players}: { players: Player[] }) {
   console.log("Rendering Golpeado");
@@ -22,6 +23,11 @@ export default function Golpeado({players}: { players: Player[] }) {
   const handlePlayerChange = useCallback((players : Player[]) => {
     setSelectedPlayers(players);
   }, []);
+
+  const handleRemovePlayer = useCallback((playerId: number): void => {
+      const newPlayers = selectedPlayers.filter(p => p.id !== playerId);
+      handlePlayerChange(newPlayers);
+  }, [selectedPlayers, handlePlayerChange]);
 
   const configGame = useCallback(() => {
     const maxSelections = 7;
@@ -46,6 +52,11 @@ export default function Golpeado({players}: { players: Player[] }) {
         className="mt-4"
         disabled={false}
         maxSelections={7}
+      />
+
+      <SelectedPlayersList
+        players={selectedPlayers}
+        onRemove={handleRemovePlayer}
       />
 
     </div>
