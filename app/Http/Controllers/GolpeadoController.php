@@ -10,7 +10,7 @@ class GolpeadoController extends Controller
 {
     public function index() {
         $users = User::all();
-        return Inertia::render('Golpeado',[
+        return Inertia::render('HomeGolpeado',[
             'players' => $users->map(function ($user) {
                 return [
                     'id' => $user->id,

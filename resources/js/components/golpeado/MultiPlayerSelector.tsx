@@ -77,14 +77,14 @@ const MultiPlayerSelector: React.FC<MultiPlayerSelectorProps> = ({
             {/* INPUT DE BÚSQUEDA */}
             <div className="relative">
                 <div className="flex gap-2">
-                    <div className="relative flex-1">
+                    <div className="relative flex items-center flex-1 gap-2">
                         <input
                             type="text"
                             value={searchTerm}
                             onChange={handleInputChange}
                             placeholder={canAddMore ? placeholder : `Máximo ${maxSelections} jugadores`}
                             disabled={disabled || !canAddMore}
-                            className="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                         />
                         <Button variant="outline" size="lg">
                             <Users />

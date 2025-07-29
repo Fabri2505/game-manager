@@ -30,18 +30,17 @@ export default function Golpeado({players}: { players: Player[] }) {
       handlePlayerChange(newPlayers);
   }, [selectedPlayers, handlePlayerChange]);
 
-  const configGame = useCallback(() => {
-    const maxSelections = 7;
+  // const configGame = useCallback(() => {
+  //   const maxSelections = 7;
 
-    const isReady = selectedPlayers.length >0 && selectedPlayers.length <= maxSelections;
+  //   const isReady = selectedPlayers.length >0 && selectedPlayers.length <= maxSelections;
 
-    return {maxSelections, isReady};
-  }, [selectedPlayers.length]);
+  //   return {maxSelections, isReady};
+  // }, [selectedPlayers.length]);
 
   return (
     <div className="p-2">
       <Header_Golpeao 
-        logo={<Gamepad2 className="bg-blue-600 text-white p-2 rounded-md" size={45}/>}
         titulo="Golpeado" 
         descrip="Bienvenido al juego Golpeado. Aquí podrás jugar con una mano de 7 cartas y ver quién será el donador." 
         botones={botones}/>

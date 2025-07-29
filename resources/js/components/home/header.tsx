@@ -3,14 +3,14 @@ import { JSX } from "react";
 import { Button } from "../ui/button";
 
 export default function Header_Golpeao(
-    {logo, botones, titulo, descrip}:{logo:JSX.Element, botones:JSX.Element[], titulo:string, descrip:string}
+    {logo, botones, titulo, descrip}:{logo?:JSX.Element, botones:JSX.Element[], titulo:string, descrip:string}
 ) {
     return (
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
             <div className="flex items-center gap-4 justify-baseline">
                 <div className="flex items-center gap-2">
                     <Button variant="ghost"><ArrowLeft /></Button>
-                    {logo}
+                    {logo && logo}
                     {/* <Gamepad2 className="bg-blue-600 text-white p-2 rounded-md" size={45}/> */}
                 </div>
                 <div>
