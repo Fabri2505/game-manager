@@ -1,7 +1,6 @@
 import { Player } from "@/lib/utils-golpea";
 import React from "react";
 import PlayerItem from "./PlayerItem";
-import { Card, CardContent } from "../ui/card";
 import { Crown } from "lucide-react";
 
 const SelectedPlayersList = React.memo<{

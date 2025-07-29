@@ -108,7 +108,7 @@ const MultiPlayerSelector: React.FC<MultiPlayerSelectorProps> = ({
                         
                         {/* NO HAY RESULTADOS */}
                         {showDropdown && filteredPlayers.length === 0 && searchTerm.length > 0 && canAddMore && (
-                            <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg p-4 text-gray-500 text-center">
+                            <div className="absolute z-10 w-1/2 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg p-4 text-gray-500 text-center">
                                 No se encontraron jugadores disponibles
                             </div>
                         )}
