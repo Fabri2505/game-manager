@@ -1,8 +1,8 @@
 import { Player } from "@/lib/utils-golpea";
 import React, { useCallback, useState } from "react";
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
-import { Badge, Check, Crown, UserCheck, UserX } from "lucide-react";
+import {Crown, UserCheck, UserX } from "lucide-react";
 
 
 const PlayerItem = React.memo<{
@@ -30,37 +30,44 @@ const PlayerItem = React.memo<{
     return name.split(' ').map(palabra => palabra.charAt(0)).join('').toUpperCase().slice(0,2);
   };
 
+  const truncateEmail = (email: string, maxLength: number = 25) => {
+    if (email.length <= maxLength) return email;
+    return email.substring(0, maxLength) + '...';
+  };
+
   return (
     <Card className={`w-full max-w-sm transition-all duration-200 rounded-none ${
       localIsSelected 
-          ? 'border-blue-500 border-2 bg-blue-50 shadow-md' 
-          : 'border-gray-200 hover:border-gray-300'
-      }`}>
+        ? 'border-blue-500 border-2 bg-blue-50 shadow-md' 
+        : 'border-gray-200 hover:border-gray-300'
+    }`}>
       <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className={`h-10 w-10 flex items-center justify-center text-white font-medium text-sm rounded-none ${
+        <div className="flex items-start justify-between">
+          <div className="flex items-center space-x-3 min-w-0 flex-1">
+            <div className={`h-10 w-10 flex items-center justify-center text-white font-medium text-sm rounded-none flex-shrink-0 ${
               localIsSelected ? 'bg-blue-600' : 'bg-gray-500'
-              }`}>
+            }`}>
               {getIniciales(player.name)}
             </div>
-            <div>
-              <CardTitle className="font-medium text-blue-900">
+            <div className="min-w-0 flex-1">
+              <CardTitle className="font-medium text-blue-900 truncate">
                 {player.name}
               </CardTitle>
-              <CardDescription className="text-sm text-blue-600">
-                {player.email}
+              <CardDescription className="text-sm text-blue-600 truncate">
+                {truncateEmail(player.email)}
               </CardDescription>
             </div>
           </div>
-          {/* Badge de estado */}
+          
+          {/* Badge de estado - ahora dentro del layout */}
           {localIsSelected && (
-            <CardAction className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 ml-2 bg-yellow-200 text-yellow-800 border-yellow-300">
-              <Crown />Ganador
-            </CardAction>
+            <div className="inline-flex items-center rounded-2xl px-2 py-1 text-xs font-semibold bg-yellow-200 text-yellow-800 border-yellow-300 flex-shrink-0 ml-2">
+              <Crown className="h-3 w-3 mr-1" />Ganador
+            </div>
           )}
         </div>
       </CardHeader>
+      
       <CardContent className="flex gap-2 pt-0">
         <Button 
           onClick={handleRemove} 
