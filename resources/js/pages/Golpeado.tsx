@@ -1,7 +1,7 @@
 import Header_Golpeao from "@/components/home/header";
 import { Button } from "@/components/ui/button";
 import { Player } from "@/lib/utils-golpea";
-import { Music } from "lucide-react";
+import { Gamepad2, Music } from "lucide-react";
 import  MultiPlayerSelector  from "@/components/golpeado/MultiPlayerSelector";
 import { useCallback, useState } from "react";
 import SelectedPlayersList from "@/components/golpeado/SelectedPlayersList";
@@ -41,6 +41,7 @@ export default function Golpeado({players}: { players: Player[] }) {
   return (
     <div className="p-2">
       <Header_Golpeao 
+        logo={<Gamepad2 className="bg-blue-600 text-white p-2 rounded-md" size={45}/>}
         titulo="Golpeado" 
         descrip="Bienvenido al juego Golpeado. Aquí podrás jugar con una mano de 7 cartas y ver quién será el donador." 
         botones={botones}/>
